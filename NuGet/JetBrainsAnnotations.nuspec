@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>JetBrainsAnnotations.Fody</id>
+    <version>$version$</version>
+    <title>JetBrainsAnnotations.Fody</title>
+    <authors>Simon Cropp</authors>
+    <owners>Simon Cropp</owners>
+    <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
+    <projectUrl>http://github.com/SimonCropp/JetBrainsAnnotations.Fody</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Fody add-in that removes the reference to JetBrains.Annotations.dll</description>
+    <language>en-AU</language>
+    <tags>JetBrains Annotations, ILWeaving, Runtime Proxy, Fody, Cecil</tags>
+    <dependencies>
+      <dependency id="JetBrains.Annotations"/>
+    </dependencies>
+  </metadata>
+</package>
