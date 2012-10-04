@@ -9,7 +9,7 @@ Modifies an assembly so you can leverage JetBrains Annotations but don't need to
 ## What are JetBrains Annotations
 
 The assembly JetBrainsAnnotations.dll comes as part of the nuget http://nuget.org/packages/JetBrains.Annotations.
-It provides standard JetBrains ReSharper code annotation attributes implementation. This allows you to better leverage the ReSharper intellisense.
+It provides standard JetBrains ReSharper code annotation attribute implementations. This allows you to better leverage the ReSharper intellisense.
 
 For more information 
 
