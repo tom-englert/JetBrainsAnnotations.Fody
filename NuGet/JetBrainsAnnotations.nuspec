@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Fody add-in that removes the reference to JetBrains.Annotations.dll</description>
     <language>en-AU</language>
-    <tags>JetBrains Annotations, ILWeaving, Runtime Proxy, Fody, Cecil</tags>
+    <tags>JetBrains Annotations, ILWeaving, Fody, Cecil</tags>
     <dependencies>
       <dependency id="JetBrains.Annotations"/>
     </dependencies>
