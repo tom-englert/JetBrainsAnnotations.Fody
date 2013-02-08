@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\packages\JetBrains.Annotations.7.0\lib\net40\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Cecil">
       <HintPath>..\Lib\Cecil\Mono.Cecil.dll</HintPath>
@@ -60,8 +64,6 @@
     <Compile Include="MockAssemblyResolver.cs" />
     <Compile Include="Verifier.cs" />
     <Compile Include="IntegrationTests.cs" />
-    <Compile Include="WeaverHelper.cs" />
-    <Compile Include="XmlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -7,8 +7,6 @@ using Mono.Collections.Generic;
 public class ModuleWeaver
 {
     List<string> allAttributes = new List<string>();
-    public string IncludeNamespaces { get; set; }
-    public string ExcludeNamespaces { get; set; }
     public Action<string> LogInfo { get; set; }
     public Action<string> LogWarning { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
