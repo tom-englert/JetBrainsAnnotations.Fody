@@ -14,6 +14,7 @@
     <tags>JetBrains Annotations, ILWeaving, Fody, Cecil</tags>
     <dependencies>
       <dependency id="JetBrains.Annotations"/>
+      <dependency id="Fody"/>
     </dependencies>
   </metadata>
 </package>
