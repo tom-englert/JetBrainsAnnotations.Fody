@@ -4,7 +4,13 @@ Modifies an assembly so you can leverage JetBrains Annotations but don't need to
 
 [Introduction to Fody](http://github.com/Fodyp/Fody/wiki/SampleUsage)
 
-## Nuget package http://nuget.org/packages/JetBrainsAnnotations.Fody 
+## Nuget 
+
+Nuget package http://nuget.org/packages/JetBrainsAnnotations.Fody 
+
+To Install from the Nuget Package Manager Console 
+    
+    PM> Install-Package JetBrainsAnnotations.Fody
 
 ## What are JetBrains Annotations
 
