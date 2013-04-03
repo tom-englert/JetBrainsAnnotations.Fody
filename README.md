@@ -27,3 +27,7 @@ For more information
 
  * For each attribute defined in JetBrainsAnnotations.dll remove usages of those attributes from your assembly.
  * Removes the reference to JetBrainsAnnotations.dll
+
+## Icon
+
+<a href="http://thenounproject.com/noun/fighter-jet/#icon-No9259" target="_blank">Fighter Jet</a> designed by <a href="http://thenounproject.com/lukefirth" target="_blank">Luke Anthony Firth</a> from The Noun Project
