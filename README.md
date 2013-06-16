@@ -1,5 +1,7 @@
 ## This is an add-in for [Fody](https://github.com/Fody/Fody/) 
 
+![Icon](https://raw.github.com/Fody/JetBrainsAnnotations/master/Icons/package_icon.png)
+
 Modifies an assembly so you can leverage JetBrains Annotations but don't need to deploy JetBrainsAnnotations.dll
 
 [Introduction to Fody](http://github.com/Fodyp/Fody/wiki/SampleUsage)
