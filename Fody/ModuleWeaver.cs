@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Mono.Cecil;
 using Mono.Collections.Generic;
 
@@ -67,6 +68,8 @@ public class ModuleWeaver
                 }
             }
         }
+
+        DeleteJetBrainsAssembly();
     }
 
     void TrimAttributes(Collection<CustomAttribute> customAttributes)
@@ -90,6 +93,16 @@ public class ModuleWeaver
             {
                 allAttributes.Add(attributeName);
             }
+        }
+    }
+
+    void DeleteJetBrainsAssembly()
+    {
+        var binDirectory = new FileInfo(ModuleDefinition.FullyQualifiedName).DirectoryName;
+        var jetBrainsAssemblyPath = binDirectory + @"\JetBrains.Annotations.dll";
+        if (File.Exists(jetBrainsAssemblyPath))
+        {
+            File.Delete(jetBrainsAssemblyPath);
         }
     }
 }
