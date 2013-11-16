@@ -16,13 +16,12 @@ To Install from the Nuget Package Manager Console
 
 ## What are JetBrains Annotations
 
-The assembly JetBrainsAnnotations.dll comes as part of the nuget http://nuget.org/packages/JetBrains.Annotations.
+The assembly JetBrainsAnnotations.dll is shipped as part of ReSharper and is included with this nuget.
 It provides standard JetBrains ReSharper code annotation attribute implementations. This allows you to better leverage the ReSharper intellisense.
 
 For more information 
 
  * http://www.jetbrains.com/resharper/webhelp/Code_Analysis__External_Annotations.html 
- * https://github.com/artikh/JetBrains.Annotations
  * http://www.jetbrains.com/resharper/features/code_analysis.html#Annotated_Framework
 
 ## What it actually does to your assembly
