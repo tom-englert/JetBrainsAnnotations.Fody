@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using NUnit.Framework;
@@ -36,17 +37,23 @@ public class IntegrationTests
     }
 
     [Test]
-    public void Simple()
+    public void CanCreateClass()
     {
         var type = assembly.GetType("SimpleClass");
         Activator.CreateInstance(type);
+    }
+
+    [Test]
+    public void ReferenceIsRemoved()
+    {
+        Assert.IsFalse(assembly.GetReferencedAssemblies().Any(x => x.Name == "JetBrains.Annotations"));
     }
 
 #if(DEBUG)
     [Test]
     public void PeVerify()
     {
-        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
+        Verifier.Verify(afterAssemblyPath);
     }
 #endif
 
