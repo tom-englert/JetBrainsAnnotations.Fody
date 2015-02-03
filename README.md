@@ -6,14 +6,12 @@ Modifies an assembly so you can leverage JetBrains Annotations but don't need to
 
 [Introduction to Fody](http://github.com/Fodyp/Fody/wiki/SampleUsage)
 
-## Nuget 
+## The nuget package  [![NuGet Status](http://img.shields.io/nuget/v/JetBrainsAnnotations.Fody.svg?style=flat)](https://www.nuget.org/packages/JetBrainsAnnotations.Fody/)
 
-Nuget package http://nuget.org/packages/JetBrainsAnnotations.Fody 
+https://nuget.org/packages/JetBrainsAnnotations.Fody/
 
-To Install from the Nuget Package Manager Console 
-    
     PM> Install-Package JetBrainsAnnotations.Fody
-
+    
 ## What are JetBrains Annotations
 
 The assembly JetBrainsAnnotations.dll is shipped as part of ReSharper and is included with this nuget.
