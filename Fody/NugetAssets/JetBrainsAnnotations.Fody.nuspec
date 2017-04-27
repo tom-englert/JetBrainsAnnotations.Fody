@@ -3,7 +3,7 @@
   <metadata minClientVersion="2.8">
     <id>JetBrainsAnnotations.Fody</id>
     <version>$version$</version>
-    <title>JetBrainsAnnotations.Fody</title>
+    <title>JetBrainsAnnotations.Fody (no longer maintained)</title>
     <authors>Simon Cropp</authors>
     <owners>Simon Cropp</owners>
     <developmentDependency>true</developmentDependency>
