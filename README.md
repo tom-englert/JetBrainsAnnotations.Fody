@@ -1,3 +1,5 @@
+## This project is no longer maintained. Raise an issue to take ownership
+
 ## This is an add-in for [Fody](https://github.com/Fody/Fody/) 
 
 ![Icon](https://raw.github.com/Fody/JetBrainsAnnotations/master/Icons/package_icon.png)
