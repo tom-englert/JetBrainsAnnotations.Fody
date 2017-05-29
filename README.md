@@ -1,4 +1,9 @@
+[![Chat on Gitter Status](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody)
+[![NuGet Status](http://img.shields.io/nuget/v/JetBrainsAnnotations.Fody.svg?style=flat)](https://www.nuget.org/packages/JetBrainsAnnotations.Fody/)
+
+
 ## This project is no longer maintained. Raise an issue to take ownership
+
 
 ## This is an add-in for [Fody](https://github.com/Fody/Fody/) 
 
@@ -8,12 +13,14 @@ Modifies an assembly so you can leverage JetBrains Annotations but don't need to
 
 [Introduction to Fody](http://github.com/Fody/Fody/wiki/SampleUsage)
 
-## The nuget package  [![NuGet Status](http://img.shields.io/nuget/v/JetBrainsAnnotations.Fody.svg?style=flat)](https://www.nuget.org/packages/JetBrainsAnnotations.Fody/)
+
+## The nuget package
 
 https://nuget.org/packages/JetBrainsAnnotations.Fody/
 
     PM> Install-Package JetBrainsAnnotations.Fody
-    
+
+
 ## What are JetBrains Annotations
 
 The assembly JetBrainsAnnotations.dll is shipped as part of ReSharper and is included with this nuget.
@@ -24,10 +31,12 @@ For more information
  * http://www.jetbrains.com/resharper/webhelp/Code_Analysis__External_Annotations.html 
  * http://www.jetbrains.com/resharper/features/code_analysis.html#Annotated_Framework
 
+
 ## What it actually does to your assembly
 
  * For each attribute defined in JetBrainsAnnotations.dll remove usages of those attributes from your assembly.
  * Removes the reference to JetBrainsAnnotations.dll
+
 
 ## Icon
 
