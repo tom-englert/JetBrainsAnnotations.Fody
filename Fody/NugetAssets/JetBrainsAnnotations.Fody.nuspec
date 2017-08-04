@@ -3,19 +3,19 @@
   <metadata minClientVersion="2.8">
     <id>JetBrainsAnnotations.Fody</id>
     <version>$version$</version>
-    <title>JetBrainsAnnotations.Fody (no longer maintained)</title>
-    <authors>Simon Cropp</authors>
-    <owners>Simon Cropp</owners>
+    <title>JetBrainsAnnotations.Fody</title>
+    <authors>Simon Cropp, Tom Englert</authors>
+    <owners>Tom Englert</owners>
     <developmentDependency>true</developmentDependency>
     <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
     <projectUrl>http://github.com/Fody/JetBrainsAnnotations.Fody</projectUrl>
     <iconUrl>https://raw.github.com/Fody/JetBrainsAnnotations/master/Icons/package_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Fody add-in that removes the reference to JetBrains.Annotations.dll</description>
-    <language>en-AU</language>
+    <description>Fody add-in that removes the reference to JetBrains.Annotations.dll and converts the attributes to external documentation XML.</description>
+    <language>en-US</language>
     <tags>JetBrains Annotations, ILWeaving, Fody, Cecil</tags>
     <dependencies>
-      <dependency id="Fody" version="2.0.0"/>
+      <dependency id="Fody" version="2.1.2"/>
     </dependencies>
   </metadata>
 </package>

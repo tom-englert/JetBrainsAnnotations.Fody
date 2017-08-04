@@ -2,60 +2,80 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Linq;
+
 using Mono.Cecil;
 using NUnit.Framework;
+
+using Tests.Properties;
 
 [TestFixture]
 public class IntegrationTests
 {
-    Assembly assembly;
-    string beforeAssemblyPath;
-    string afterAssemblyPath;
+    private readonly Assembly _assembly;
+    private readonly string _beforeAssemblyPath;
+    private readonly string _afterAssemblyPath;
+    private readonly string _annotations;
 
     public IntegrationTests()
     {
-        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll"));
+        _beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll"));
 #if (!DEBUG)
-
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
 
-        afterAssemblyPath = beforeAssemblyPath.Replace(".dll", "2.dll");
-        File.Copy(beforeAssemblyPath, afterAssemblyPath, true);
+        _afterAssemblyPath = _beforeAssemblyPath.Replace(".dll", "2.dll");
 
-        using (var moduleDefinition = ModuleDefinition.ReadModule(beforeAssemblyPath))
+        using (var moduleDefinition = ModuleDefinition.ReadModule(_beforeAssemblyPath))
         {
+            var projectDirectoryPath = Path.GetDirectoryName(_beforeAssemblyPath);
+            var targetName = Path.ChangeExtension(_beforeAssemblyPath, ".ExternalAnnotations.xml");
+
+            if (File.Exists(targetName))
+                File.Delete(targetName);
+
             var weavingTask = new ModuleWeaver
             {
                 ModuleDefinition = moduleDefinition,
-                AssemblyResolver = new MockAssemblyResolver()
+                AssemblyResolver = new MockAssemblyResolver(),
+                ProjectDirectoryPath = projectDirectoryPath
             };
 
             weavingTask.Execute();
-            moduleDefinition.Write(afterAssemblyPath);
+
+            _annotations = XDocument.Load(targetName).ToString();
+
+            moduleDefinition.Write(_afterAssemblyPath);
         }
 
-        assembly = Assembly.LoadFile(afterAssemblyPath);
+        _assembly = Assembly.LoadFile(_afterAssemblyPath);
     }
 
     [Test]
     public void CanCreateClass()
     {
-        var type = assembly.GetType("SimpleClass");
+        var type = _assembly.GetType("SimpleClass");
         Activator.CreateInstance(type);
     }
 
     [Test]
     public void ReferenceIsRemoved()
     {
-        Assert.IsFalse(assembly.GetReferencedAssemblies().Any(x => x.Name == "JetBrains.Annotations"));
+        Assert.IsFalse(_assembly.GetReferencedAssemblies().Any(x => x.Name == "JetBrains.Annotations"));
+    }
+
+
+    [Test]
+    public void AreExternalAnnotationsCorrect()
+    {
+        Assert.AreEqual(Resources.ExpectedAnnotations, _annotations);
     }
 
 #if(DEBUG)
     [Test]
     public void PeVerify()
     {
-        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
+        Verifier.Verify(_beforeAssemblyPath, _afterAssemblyPath);
     }
 #endif
 

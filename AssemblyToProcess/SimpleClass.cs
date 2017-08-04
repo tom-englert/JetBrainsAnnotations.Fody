@@ -24,4 +24,28 @@ public class SimpleClass
     {
         
     }
+
+    [NotNull]
+    public string NotNullMethod([NotNull] string notNull, [CanBeNull] string canBeNull, [NotNull, ItemNotNull] string[] notNullAndItemNotNull)
+    {
+        return "";
+    }
+
+    [NotNull]
+    [StringFormatMethod("format")]
+    public string StringFormat([NotNull] string format, [NotNull] params object[] args)
+    {
+        return "";
+    }
+
+    [ContractAnnotation("param1:null => null")]
+    public string ContractMethod(string param1, string param2)
+    {
+        return "";
+    }
+
+    public string MethodWithoutAnyAttribute(string arg)
+    {
+        return "";
+    }
 }
