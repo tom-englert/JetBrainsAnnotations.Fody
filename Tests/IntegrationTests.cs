@@ -17,18 +17,18 @@ namespace Tests
     [TestFixture]
     public class IntegrationTests
     {
+#if (!DEBUG)
+        private const string Configuration = "Release";
+#else
+        private const string Configuration = "Debug";
+#endif
         private readonly Assembly _assembly;
-        private readonly string _beforeAssemblyPath;
+        private readonly string _beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, $@"..\..\..\AssemblyToProcess\bin\{Configuration}\AssemblyToProcess.dll"));
         private readonly string _afterAssemblyPath;
         private readonly string _annotations;
 
         public IntegrationTests()
         {
-            _beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll"));
-#if (!DEBUG)
-        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
-#endif
-
             _afterAssemblyPath = _beforeAssemblyPath.Replace(".dll", "2.dll");
 
             using (var moduleDefinition = ModuleDefinition.ReadModule(_beforeAssemblyPath))
