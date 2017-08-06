@@ -31,7 +31,9 @@ namespace Tests
         {
             _afterAssemblyPath = _beforeAssemblyPath.Replace(".dll", "2.dll");
 
-            using (var moduleDefinition = ModuleDefinition.ReadModule(_beforeAssemblyPath))
+            var assemblyResolver = new MockAssemblyResolver();
+
+            using (var moduleDefinition = ModuleDefinition.ReadModule(_beforeAssemblyPath, new ReaderParameters { AssemblyResolver = assemblyResolver}))
             {
                 var projectDirectoryPath = Path.GetDirectoryName(_beforeAssemblyPath);
                 var targetName = Path.ChangeExtension(_beforeAssemblyPath, ".ExternalAnnotations.xml");
@@ -42,7 +44,7 @@ namespace Tests
                 var weavingTask = new ModuleWeaver
                 {
                     ModuleDefinition = moduleDefinition,
-                    AssemblyResolver = new MockAssemblyResolver(),
+                    AssemblyResolver = assemblyResolver,
                     ProjectDirectoryPath = projectDirectoryPath
                 };
 
