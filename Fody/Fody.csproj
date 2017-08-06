@@ -45,9 +45,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="NugetAssets\uninstall.ps" />
-    <None Include="packages.config" />
-    <Reference Include="JetBrains.Annotations">
-      <HintPath>..\Lib\JetBrains.Annotations.dll</HintPath>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Reference Include="JetBrains.Annotations, Version=11.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.11.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
@@ -82,8 +84,6 @@
     <Copy SourceFiles="$(ProjectDir)NuGetAssets\JetBrainsAnnotations.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild" />
     <Copy SourceFiles="$(OutputPath)JetBrainsAnnotations.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild" />
     <Copy SourceFiles="$(OutputPath)JetBrainsAnnotations.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)Lib\JetBrains.Annotations.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Lib" />
-    <Copy SourceFiles="$(SolutionDir)Lib\JetBrains.Annotations.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Lib" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Tools\install.ps1" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\uninstall.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Tools\uninstall.ps1" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild" MetadataAssembly="$(OutputPath)JetBrainsAnnotations.Fody.dll" />
