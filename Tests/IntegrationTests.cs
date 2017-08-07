@@ -14,6 +14,10 @@ using Tests.Properties;
 
 namespace Tests
 {
+    using System.Diagnostics;
+
+    using JetBrains.Annotations;
+
     [TestFixture]
     public class IntegrationTests
     {
@@ -22,9 +26,15 @@ namespace Tests
 #else
         private const string Configuration = "Debug";
 #endif
+        [NotNull]
         private readonly Assembly _assembly;
+        [NotNull]
+        // ReSharper disable once AssignNullToNotNullAttribute
+        // ReSharper disable once PossibleNullReferenceException
         private readonly string _beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, $@"..\..\..\AssemblyToProcess\bin\{Configuration}\AssemblyToProcess.dll"));
+        [NotNull]
         private readonly string _afterAssemblyPath;
+        [NotNull]
         private readonly string _annotations;
 
         public IntegrationTests()
@@ -41,6 +51,8 @@ namespace Tests
                 if (File.Exists(targetName))
                     File.Delete(targetName);
 
+                Debug.Assert(moduleDefinition != null, "moduleDefinition != null");
+                Debug.Assert(projectDirectoryPath != null, "projectDirectoryPath != null");
                 var weavingTask = new ModuleWeaver
                 {
                     ModuleDefinition = moduleDefinition,
@@ -55,6 +67,7 @@ namespace Tests
                 moduleDefinition.Write(_afterAssemblyPath);
             }
 
+            // ReSharper disable once AssignNullToNotNullAttribute
             _assembly = Assembly.LoadFile(_afterAssemblyPath);
         }
 
@@ -62,12 +75,14 @@ namespace Tests
         public void CanCreateClass()
         {
             var type = _assembly.GetType("AssemblyToProcess.SimpleClass");
+            // ReSharper disable once AssignNullToNotNullAttribute
             Activator.CreateInstance(type);
         }
 
         [Test]
         public void ReferenceIsRemoved()
         {
+            // ReSharper disable once PossibleNullReferenceException
             Assert.IsFalse(_assembly.GetReferencedAssemblies().Any(x => x.Name == "JetBrains.Annotations"));
         }
 

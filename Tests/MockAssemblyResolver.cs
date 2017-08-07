@@ -1,21 +1,29 @@
 using System;
 using System.Reflection;
+
 using Mono.Cecil;
 
-public class MockAssemblyResolver : IAssemblyResolver
+namespace Tests
 {
-    public AssemblyDefinition Resolve(AssemblyNameReference name)
-    {
-        var codeBase = Assembly.Load(name.FullName).CodeBase.Replace("file:///", "");
-        return AssemblyDefinition.ReadAssembly(codeBase);
-    }
+    using JetBrains.Annotations;
 
-    public AssemblyDefinition Resolve(AssemblyNameReference name, ReaderParameters parameters)
+    public class MockAssemblyResolver : IAssemblyResolver
     {
-        throw new NotImplementedException();
-    }
+        [CanBeNull]
+        public AssemblyDefinition Resolve([NotNull] AssemblyNameReference name)
+        {
+            // ReSharper disable once PossibleNullReferenceException
+            var codeBase = Assembly.Load(name.FullName).CodeBase.Replace("file:///", "");
+            return AssemblyDefinition.ReadAssembly(codeBase);
+        }
 
-    public void Dispose()
-    {
+        public AssemblyDefinition Resolve(AssemblyNameReference name, ReaderParameters parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+        }
     }
 }

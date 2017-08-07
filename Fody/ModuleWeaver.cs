@@ -9,17 +9,29 @@ using Mono.Cecil.Rocks;
 
 namespace JetBrainsAnnotations.Fody
 {
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+
     using JetBrains.Annotations;
+
+    using Mono.Collections.Generic;
 
     public class ModuleWeaver
     {
+        [NotNull, UsedImplicitly]
         public Action<string> LogInfo { get; set; }
+        [NotNull, UsedImplicitly]
         public Action<string> LogWarning { get; set; }
+        [NotNull, UsedImplicitly]
         public Action<string> LogError { get; set; }
+        [NotNull, UsedImplicitly]
         public ModuleDefinition ModuleDefinition { get; set; }
+        [NotNull, UsedImplicitly]
         public IAssemblyResolver AssemblyResolver { get; set; }
+        [NotNull, UsedImplicitly]
         public string ProjectDirectoryPath { get; set; }
 
+        // ReSharper disable once NotNullMemberIsNotInitialized
         public ModuleWeaver()
         {
             LogInfo = LogWarning = LogError = _ => { };
@@ -27,7 +39,9 @@ namespace JetBrainsAnnotations.Fody
 
         public void Execute()
         {
-            var jetbrainsAnnotationsReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name.StartsWith("JetBrains.Annotations"));
+            var assemblyReferences = AssemblyReferences;
+            // ReSharper disable once PossibleNullReferenceException
+            var jetbrainsAnnotationsReference = assemblyReferences.FirstOrDefault(x => x.Name.StartsWith("JetBrains.Annotations"));
             if (jetbrainsAnnotationsReference == null)
             {
                 LogWarning("Reference to JetBrains.Annotations not found.");
@@ -40,10 +54,11 @@ namespace JetBrainsAnnotations.Fody
                 return;
             }
 
-            ModuleDefinition.AssemblyReferences.Remove(jetbrainsAnnotationsReference);
+            assemblyReferences.Remove(jetbrainsAnnotationsReference);
 
             var jetbrainsAnnotations = AssemblyResolver.Resolve(jetbrainsAnnotationsReference);
 
+            Debug.Assert(jetbrainsAnnotations != null, "jetbrainsAnnotations != null");
             var elements = new Executor(ModuleDefinition, jetbrainsAnnotations).Execute();
 
             if (!elements.Any())
@@ -52,18 +67,24 @@ namespace JetBrainsAnnotations.Fody
             Save(elements);
         }
 
-        private void Save(IList<XElement> elements)
+        [NotNull, ItemNotNull]
+        // ReSharper disable once AssignNullToNotNullAttribute
+        private Collection<AssemblyNameReference> AssemblyReferences => ModuleDefinition.AssemblyReferences;
+
+        private void Save([NotNull, ItemNotNull] IEnumerable<XElement> elements)
         {
-            var assemblyName = ModuleDefinition.Assembly.Name.Name;
+            var assemblyName = ModuleDefinition.Assembly?.Name?.Name;
+            Debug.Assert(assemblyName != null, "assemblyName != null");
+
             var externalAnnotationsFileName = assemblyName + ".ExternalAnnotations.xml";
             var targetName = Path.Combine(ProjectDirectoryPath, externalAnnotationsFileName);
 
             LogInfo($"Generate external annotations for {assemblyName} => {externalAnnotationsFileName} => {targetName}");
 
             var document = new XDocument();
-            var root = new XElement("assembly", new XAttribute("name", ModuleDefinition.Assembly.Name.Name));
+            var root = new XElement("assembly", new XAttribute("name", assemblyName));
 
-            root.Add(elements.OrderBy(el => el?.Attribute("name")?.Value.Substring(2)));
+            root.Add(elements.OrderBy(el => el.Attribute("name")?.Value.Substring(2)));
 
             document.Add(root);
 
@@ -77,7 +98,7 @@ namespace JetBrainsAnnotations.Fody
             document.Save(targetName);
         }
 
-        private static bool ContentEquals(string targetName, XNode document)
+        private static bool ContentEquals([NotNull] string targetName, [NotNull] XNode document)
         {
             try
             {
@@ -94,17 +115,23 @@ namespace JetBrainsAnnotations.Fody
 
         private class Executor
         {
+            [NotNull, ItemNotNull]
             private readonly ICollection<string> _allAttributes;
+            [NotNull, ItemNotNull]
             private readonly IList<XElement> _root;
+            [NotNull]
             private readonly ModuleDefinition _moduleDefinition;
 
-            public Executor(ModuleDefinition moduleDefinition, AssemblyDefinition jetbrainsAnnotations)
+            public Executor([NotNull] ModuleDefinition moduleDefinition, [NotNull] AssemblyDefinition jetbrainsAnnotations)
             {
                 _moduleDefinition = moduleDefinition;
                 _root = new List<XElement>();
                 _allAttributes = new HashSet<string>(GetAllAttributes(jetbrainsAnnotations));
             }
 
+            [NotNull, ItemNotNull]
+            [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
+            [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
             public IList<XElement> Execute()
             {
                 TrimAttributes(_moduleDefinition);
@@ -151,24 +178,29 @@ namespace JetBrainsAnnotations.Fody
 
 
                 var id = DocCommentId.GetDocCommentId(member);
+                // ReSharper disable once AssignNullToNotNullAttribute
                 var content = new XElement("member", new XAttribute("name", id));
 
                 foreach (var attribute in attributes)
                 {
+                    // ReSharper disable once PossibleNullReferenceException
+                    // ReSharper disable once AssignNullToNotNullAttribute
                     content.Add(new XElement("attribute", new XAttribute("ctor", DocCommentId.GetDocCommentId(attribute.Constructor.Resolve()))));
                 }
 
                 _root.Add(content);
             }
 
-            private void ProcessMethodAttributes(MethodDefinition method)
+            private void ProcessMethodAttributes([NotNull] MethodDefinition method)
             {
                 var attributes = TrimAttributes(method);
                 var isPublicVisible = method.IsPublicVisible();
 
+                // ReSharper disable once AssignNullToNotNullAttribute
                 TrimAttributes(method.MethodReturnType);
 
                 var id = DocCommentId.GetDocCommentId(method);
+                Debug.Assert(id != null, "id != null");
                 var content = new XElement("member", new XAttribute("name", id));
 
                 foreach (var attribute in attributes)
@@ -178,8 +210,10 @@ namespace JetBrainsAnnotations.Fody
 
                 ProcessParameterAttributes(method, content, isPublicVisible);
 
+                // ReSharper disable once PossibleNullReferenceException
                 foreach (var parameter in method.GenericParameters)
                 {
+                    // ReSharper disable once AssignNullToNotNullAttribute
                     TrimAttributes(parameter);
                 }
 
@@ -189,15 +223,18 @@ namespace JetBrainsAnnotations.Fody
                 }
             }
 
-            private void ProcessParameterAttributes(MethodDefinition method, XElement parent, bool isPublicVisible)
+            private void ProcessParameterAttributes([NotNull] MethodDefinition method, [NotNull] XElement parent, bool isPublicVisible)
             {
+                // ReSharper disable once PossibleNullReferenceException
                 foreach (var parameter in method.Parameters)
                 {
+                    // ReSharper disable once AssignNullToNotNullAttribute
                     var parameterAttributes = TrimAttributes(parameter);
 
                     if (!isPublicVisible)
                         continue;
 
+                    // ReSharper disable once AssignNullToNotNullAttribute
                     var content = new XElement("parameter", new XAttribute("name", parameter.Name));
 
                     foreach (var attribute in parameterAttributes)
@@ -212,14 +249,17 @@ namespace JetBrainsAnnotations.Fody
                 }
             }
 
-            private void AddAttributeDocumentation(XElement content, CustomAttribute attribute)
+            private void AddAttributeDocumentation([NotNull] XElement content, [NotNull] CustomAttribute attribute)
             {
+                // ReSharper disable once PossibleNullReferenceException
                 var constructor = attribute.Constructor.Resolve();
 
                 var id = DocCommentId.GetDocCommentId(constructor);
 
+                // ReSharper disable once AssignNullToNotNullAttribute
                 var element = new XElement("attribute", new XAttribute("ctor", id));
 
+                // ReSharper disable once PossibleNullReferenceException
                 foreach (var argument in attribute.ConstructorArguments)
                 {
                     element.Add(new XElement("argument", argument.Value?.ToString()));
@@ -228,12 +268,13 @@ namespace JetBrainsAnnotations.Fody
                 content.Add(element);
             }
 
-            private IList<CustomAttribute> TrimAttributes(ICustomAttributeProvider attributeProvider)
+            [NotNull, ItemNotNull]
+            private IList<CustomAttribute> TrimAttributes([NotNull] ICustomAttributeProvider attributeProvider)
             {
                 var customAttributes = attributeProvider.CustomAttributes;
-
+                Debug.Assert(customAttributes != null, "customAttributes != null");
                 var attributes = customAttributes
-                    .Where(attr => _allAttributes.Contains(attr.AttributeType.Name))
+                    .Where(attr => _allAttributes.Contains(attr?.AttributeType?.Name))
                     .ToArray();
 
                 foreach (var attribute in attributes)
@@ -244,11 +285,13 @@ namespace JetBrainsAnnotations.Fody
                 return attributes;
             }
 
-            private static IEnumerable<string> GetAllAttributes(AssemblyDefinition assemblyDefinition)
+            [NotNull, ItemNotNull]
+            private static IEnumerable<string> GetAllAttributes([NotNull] AssemblyDefinition assemblyDefinition)
             {
-                return assemblyDefinition.MainModule.Types
-                    .Select(type => type.Name)
-                    .Where(attributeName => attributeName.EndsWith("Attribute"));
+                // ReSharper disable once AssignNullToNotNullAttribute
+                return assemblyDefinition.MainModule?.Types?
+                    .Select(type => type?.Name)
+                    .Where(attributeName => attributeName?.EndsWith("Attribute") == true);
             }
         }
     }

@@ -62,17 +62,15 @@ namespace Tests.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;assembly name=&quot;AssemblyToProcess&quot;&gt;
-        ///  &lt;member name=&quot;T:SimpleClass&quot;&gt;
+        ///  &lt;member name=&quot;T:AssemblyToProcess.SimpleClass&quot;&gt;
         ///    &lt;attribute ctor=&quot;M:JetBrains.Annotations.UsedImplicitlyAttribute.#ctor&quot; /&gt;
         ///  &lt;/member&gt;
-        ///  &lt;member name=&quot;P:SimpleClass.Property&quot;&gt;
+        ///  &lt;member name=&quot;M:AssemblyToProcess.SimpleClass.#ctor&quot;&gt;
         ///    &lt;attribute ctor=&quot;M:JetBrains.Annotations.PublicAPIAttribute.#ctor&quot; /&gt;
         ///  &lt;/member&gt;
-        ///  &lt;member name=&quot;M:SimpleClass.Method``1&quot;&gt;
+        ///  &lt;member name=&quot;M:AssemblyToProcess.SimpleClass.#ctor(System.Double)&quot;&gt;
         ///    &lt;attribute ctor=&quot;M:JetBrains.Annotations.PublicAPIAttribute.#ctor&quot; /&gt;
-        ///  &lt;/member&gt;
-        ///  &lt;member name=&quot;M:SimpleClass.#ctor&quot;&gt;
-        ///    &lt;attribute ctor=&quot;M:JetBrains.Annotations.Publ [rest of string was truncated]&quot;;.
+        ///    &lt;parameter name=&quot;protectedConstruct [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ExpectedAnnotations {
             get {
