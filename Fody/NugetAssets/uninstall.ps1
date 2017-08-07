@@ -11,10 +11,10 @@ function Update-FodyConfig($addinName, $project)
     }   	
 
     Write-Host "Caching variables for possible update"
-	$env:FodyLastProjectPath = $project.FullName
-	$env:FodyLastWeaverName = $addinName
-	$env:FodyLastXmlContents = [IO.File]::ReadAllText($fodyWeaversPath)
-	
+    $env:FodyLastProjectPath = $project.FullName
+    $env:FodyLastWeaverName = $addinName
+    $env:FodyLastXmlContents = [IO.File]::ReadAllText($fodyWeaversPath)
+    
 
     $xml = [xml](get-content $fodyWeaversPath)
 
@@ -38,10 +38,25 @@ function UnlockWeaversXml($project)
     {
         $fodyWeaversProjectItem.Open("{7651A701-06E5-11D1-8EBD-00A0C90F26EA}")
         $fodyWeaversProjectItem.Save()
-		$fodyWeaversProjectItem.Document.Close()
+        $fodyWeaversProjectItem.Document.Close()
     }   
 }
+
+function Remove-ExternalAnnotationsFile($project)
+{
+    $extension = ".ExternalAnnotations.xml";
+    $fullName = [io.path]::ChangeExtension($project.FullName, $extension);
+    $fileName = [io.path]::GetFileName($fullName);
+    $item = $project.ProjectItems | where-object {$_.Name -eq $fileName} 
+    if ($item) 
+    { 
+        $item.Delete();
+    }
+}
+
 
 UnlockWeaversXml($project)
 
 Update-FodyConfig $package.Id.Replace(".Fody", "") $project
+
+Remove-ExternalAnnotationsFile($project)

@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 // ReSharper disable All
-#pragma warning disable 169
+#pragma warning disable 67, 169, 649
 
 [assembly: PublicAPI]
 [module: PublicAPI]
