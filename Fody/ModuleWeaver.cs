@@ -54,7 +54,11 @@ namespace JetBrainsAnnotations.Fody
 
         private void Save(IList<XElement> elements)
         {
-            var targetName = Path.Combine(ProjectDirectoryPath, Path.ChangeExtension(Path.GetFileName(ModuleDefinition.FileName), ".ExternalAnnotations.xml"));
+            var assemblyName = ModuleDefinition.Assembly.Name.Name;
+            var externalAnnotationsFileName = assemblyName + ".ExternalAnnotations.xml";
+            var targetName = Path.Combine(ProjectDirectoryPath, externalAnnotationsFileName);
+
+            LogInfo($"Generate external annotations for {assemblyName} => {externalAnnotationsFileName} => {targetName}");
 
             var document = new XDocument();
             var root = new XElement("assembly", new XAttribute("name", ModuleDefinition.Assembly.Name.Name));
@@ -64,8 +68,12 @@ namespace JetBrainsAnnotations.Fody
             document.Add(root);
 
             if (ContentEquals(targetName, document))
+            {
+                LogInfo(targetName + " is already up to date.");
                 return;
+            }
 
+            LogInfo("Updated " + targetName);
             document.Save(targetName);
         }
 
@@ -73,7 +81,7 @@ namespace JetBrainsAnnotations.Fody
         {
             try
             {
-                return File.Exists(targetName) 
+                return File.Exists(targetName)
                        && XDocument.Load(targetName).ToString(SaveOptions.DisableFormatting) == document.ToString(SaveOptions.DisableFormatting);
             }
             catch

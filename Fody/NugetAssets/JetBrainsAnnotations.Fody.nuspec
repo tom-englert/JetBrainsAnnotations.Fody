@@ -4,7 +4,7 @@
     <id>JetBrainsAnnotations.Fody</id>
     <version>$version$</version>
     <title>JetBrainsAnnotations.Fody</title>
-    <authors>Simon Cropp, Tom Englert</authors>
+    <authors>Tom Englert, Simon Cropp</authors>
     <owners>Tom Englert</owners>
     <developmentDependency>true</developmentDependency>
     <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
