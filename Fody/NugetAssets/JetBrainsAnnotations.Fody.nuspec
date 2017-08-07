@@ -8,10 +8,13 @@
     <owners>Tom Englert</owners>
     <developmentDependency>true</developmentDependency>
     <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
-    <projectUrl>http://github.com/Fody/JetBrainsAnnotations.Fody</projectUrl>
-    <iconUrl>https://raw.github.com/Fody/JetBrainsAnnotations/master/Icons/package_icon.png</iconUrl>
+    <projectUrl>https://github.com/tom-englert/JetBrainsAnnotations.Fody</projectUrl>
+    <iconUrl>https://raw.github.com/tom-englert/JetBrainsAnnotations.Fody/master/Icons/package_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Fody add-in that removes the reference to JetBrains.Annotations.dll and converts the attributes to external documentation XML.</description>
+    <description>
+      Converts all JetBrains ReSharper code annotations attributes to External Annotations,
+      so you can provide R# annotations to 3rd parties but don't need to deploy JetBrainsAnnotations.dll.
+    </description>
     <language>en-US</language>
     <tags>JetBrains Annotations, ILWeaving, Fody, Cecil</tags>
     <dependencies>

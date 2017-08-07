@@ -7,7 +7,7 @@
 ![Icon](https://raw.github.com/Fody/JetBrainsAnnotations/master/Icons/package_icon.png)
 
 Converts all JetBrains ReSharper code annotations attributes to [External Annotations](https://www.jetbrains.com/help/resharper/Code_Analysis__External_Annotations.html), 
-so you can leverage JetBrains Annotations but don't need to deploy JetBrainsAnnotations.dll. 
+so you can provide R# annotations to 3rd parties but don't need to deploy JetBrainsAnnotations.dll. 
 
 
 ## The nuget package
