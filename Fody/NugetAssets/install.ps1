@@ -96,7 +96,9 @@ function Add-ExternalAnnotationsFile($project)
     if (!$item) 
     { 
         "Will be populated during build" | Out-File $fullName
-        $project.ProjectItems.AddFromFile($fullName);
+        $item = $project.ProjectItems.AddFromFile($fullName);
+        $item.Properties.Item("BuildAction").Value = [int]0;
+        $item.Properties.Item("CopyToOutputDirectory").Value = [int]2;
     }
 }
 
