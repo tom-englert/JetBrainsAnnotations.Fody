@@ -6,7 +6,7 @@
 
 ![Icon](https://raw.github.com/Fody/JetBrainsAnnotations/master/Icons/package_icon.png)
 
-Converts all JetBrains ReSharper code annotations attributes to [External Annotations](https://www.jetbrains.com/help/resharper/Code_Analysis__External_Annotations.html), 
+Converts all JetBrains ReSharper code annotation attributes to [External Annotations](https://www.jetbrains.com/help/resharper/Code_Analysis__External_Annotations.html), 
 so you can provide R# annotations to 3rd parties but don't need to deploy JetBrainsAnnotations.dll. 
 
 
@@ -27,7 +27,7 @@ To provide the annotations to 3rd parties you must define [`JETBRAINS_ANNOTATION
 However now you have a reference and need to ship the JetBrainsAnnotations.dll with your product. 
 
 This Fody plugin converts all attributes to an external annotations XML file on the fly, so you 
-can ship just the text file with your assembly and don't need an extra reference.
+can ship just the text file with your assembly and don't need to reference JetBrainsAnnotations.
 
 For more information 
 

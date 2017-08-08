@@ -79,7 +79,7 @@ namespace JetBrainsAnnotations.Fody
             var externalAnnotationsFileName = assemblyName + ".ExternalAnnotations.xml";
             var targetName = Path.Combine(ProjectDirectoryPath, externalAnnotationsFileName);
 
-            LogInfo($"Generate external annotations for {assemblyName} => {externalAnnotationsFileName} => {targetName}");
+            LogInfo($"Generate external annotations for {assemblyName} => {targetName}");
 
             var document = new XDocument();
             var root = new XElement("assembly", new XAttribute("name", assemblyName));
