@@ -53,7 +53,7 @@ To make your annotations available to 3rd parties, you must ship this file along
 * Mark the reference to `Jetbrains.Annotations.dll` as `Copy Local`, so it won't get copied to your 
   target directory and eventually get picked up by installers.
 * If you deploy your project as a NuGet package, add `developmentDependency="true"` to the 
-  JetBrains.Annotations package entry in the projects `packages.config` files, else NuGet will list JetBrains.Annotations 
+  JetBrains.Annotations package entry in your projects `packages.config` files, else NuGet will list JetBrains.Annotations 
   as a dependency of your package:
     ```xml
     <package id="JetBrains.Annotations" version="11.0.0" targetFramework="net452" developmentDependency="true" />
