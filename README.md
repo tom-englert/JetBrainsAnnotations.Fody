@@ -24,7 +24,7 @@ It provides standard JetBrains ReSharper code annotation attribute implementatio
 This allows you to better leverage the ReSharper intellisense.
 
 To provide the annotations to 3rd parties you must define [`JETBRAINS_ANNOTATIONS`](https://www.jetbrains.com/help/resharper/Code_Analysis__Annotations_in_Source_Code.html) to include the attributes in your assembly.
-However now you have a reference and need to ship the JetBrainsAnnotations.dll with your product. 
+However now you have a reference and would need to ship the JetBrainsAnnotations.dll with your product. 
 
 This Fody plugin converts all attributes to an external annotations XML file on the fly, so you 
 can ship just the text file with your assembly and don't need to reference JetBrainsAnnotations.
@@ -43,14 +43,19 @@ For more information
 
 ## What it actually does to your project
 
-* Adds the &lt;project name&gt;.ExternalAnnotations.xml file to your project, and marks it as CopyToOutput.
+* Adds the `<project name>.ExternalAnnotations.xml` file to your project, and marks it as CopyToOutput.
 * Updates this file every time you compile.
 
-To make your annotations available to 3rd parties, you must ship this file along with the assembly.
+  NOTE: To make your annotations available to 3rd parties, you must ship this file along with the assembly.
+
+* If your project is set to generate an XML documentation file, the documentation is extended with 
+  the annotation attributes. 
+  
 
 ## What you may need to change manually
 
-* Mark the reference to `Jetbrains.Annotations.dll` as `Copy Local`, so it won't get copied to your 
+* If the `<project name>.ExternalAnnotations.xml` is not generated duing installation of the NuGet package, you will need to add it to your project manually.
+* Mark the reference to `Jetbrains.Annotations.dll` as `Copy Local => False`, so it won't get copied to your 
   target directory and eventually get picked up by installers.
 * If you deploy your project as a NuGet package, add `developmentDependency="true"` to the 
   JetBrains.Annotations package entry in your projects `packages.config` files, else NuGet will list JetBrains.Annotations 
