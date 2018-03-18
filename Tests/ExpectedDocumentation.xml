@@ -1,0 +1,160 @@
+<doc>
+  <assembly>
+    <name>AssemblyToProcess</name>
+  </assembly>
+  <members>
+    <member name="T:AssemblyToProcess.SimpleClass">
+      <summary>
+            This is a simple class
+            <p /><c>[UsedImplicitly]</c></summary>
+    </member>
+    <member name="F:AssemblyToProcess.SimpleClass.privateField">
+      <summary>
+            The private field
+            </summary>
+    </member>
+    <member name="F:AssemblyToProcess.SimpleClass.publicField">
+      <summary>
+            The public field
+            <p /><c>[NotNull]</c></summary>
+    </member>
+    <member name="F:AssemblyToProcess.SimpleClass.protectedField">
+      <summary>
+            The protected field
+            <p /><c>[NotNull]</c></summary>
+    </member>
+    <member name="P:AssemblyToProcess.SimpleClass.PublicProperty">
+      <summary>
+            Gets or sets the public property.
+            <p /><c>[PublicAPI]</c></summary>
+      <value>
+            The public property.
+            </value>
+    </member>
+    <member name="P:AssemblyToProcess.SimpleClass.PrivateProperty">
+      <summary>
+            Gets or sets the private property.
+            </summary>
+      <value>
+            The private property.
+            </value>
+    </member>
+    <member name="P:AssemblyToProcess.SimpleClass.ProtectedProperty">
+      <summary>
+            Gets or sets the protected property.
+            <p /><c>[PublicAPI]</c></summary>
+      <value>
+            The protected property.
+            </value>
+    </member>
+    <member name="P:AssemblyToProcess.SimpleClass.InternalProperty">
+      <summary>
+            Gets or sets the internal property.
+            </summary>
+      <value>
+            The internal property.
+            </value>
+    </member>
+    <member name="M:AssemblyToProcess.SimpleClass.GenericMethod``1">
+      <summary>
+            Generics the method.
+            <p /><c>[PublicAPI]</c></summary>
+      <typeparam name="T"></typeparam>
+    </member>
+    <member name="E:AssemblyToProcess.SimpleClass.PublicEvent">
+      <summary>
+            Occurs when [public event].
+            <p /><c>[CanBeNull]</c></summary>
+    </member>
+    <member name="E:AssemblyToProcess.SimpleClass.PrivateEvent">
+      <summary>
+            Occurs when [private event].
+            </summary>
+    </member>
+    <member name="E:AssemblyToProcess.SimpleClass.ProtectedEvent">
+      <summary>
+            Occurs when [protected event].
+            <p /><c>[CanBeNull]</c></summary>
+    </member>
+    <member name="M:AssemblyToProcess.SimpleClass.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:AssemblyToProcess.SimpleClass" /> class.
+            <p /><c>[PublicAPI]</c></summary>
+    </member>
+    <member name="M:AssemblyToProcess.SimpleClass.#ctor(System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:AssemblyToProcess.SimpleClass" /> class.
+            </summary>
+      <param name="privateConstructorArgs">The private constructor arguments.</param>
+    </member>
+    <member name="M:AssemblyToProcess.SimpleClass.#ctor(System.Double)">
+      <summary>
+            Initializes a new instance of the <see cref="T:AssemblyToProcess.SimpleClass" /> class.
+            <p /><c>[PublicAPI]</c></summary>
+      <param name="protectedConstructorArgs">The protected constructor arguments.<p /><c>[PublicAPI]</c></param>
+    </member>
+    <member name="M:AssemblyToProcess.SimpleClass.NotNullMethod(System.String,System.String,System.String[])">
+      <summary>
+            Nots the null method.
+            <p /><c>[NotNull]</c></summary>
+      <param name="notNull">The not null.<p /><c>[NotNull]</c></param>
+      <param name="canBeNull">The can be null.<p /><c>[CanBeNull]</c></param>
+      <param name="notNullAndItemNotNull">The not null and item not null.<p /><c>[NotNull, ItemNotNull]</c></param>
+      <returns></returns>
+    </member>
+    <member name="M:AssemblyToProcess.SimpleClass.StringFormat(System.String,System.Object[])">
+      <summary>
+            Strings the format.
+            <p /><c>[NotNull]</c></summary>
+      <param name="format">The format.<p /><c>[NotNull]</c></param>
+      <param name="args">The arguments.<p /><c>[NotNull]</c></param>
+      <returns></returns>
+    </member>
+    <member name="M:AssemblyToProcess.SimpleClass.ContractMethod(System.String,System.String)">
+      <summary>
+            Contracts the method.
+            </summary>
+      <param name="param1">The param1.</param>
+      <param name="param2">The param2.</param>
+      <returns></returns>
+    </member>
+    <member name="M:AssemblyToProcess.SimpleClass.MethodWithoutAnyAttribute(System.String)">
+      <summary>
+            Methods the without any attribute.
+            </summary>
+      <param name="arg">The argument.</param>
+      <returns></returns>
+    </member>
+    <member name="M:AssemblyToProcess.SimpleClass.InternalMethod(System.String,System.String,System.String[])">
+      <summary>
+            Internals the method.
+            </summary>
+      <param name="notNull">The not null.</param>
+      <param name="canBeNull">The can be null.</param>
+      <param name="notNullAndItemNotNull">The not null and item not null.</param>
+      <returns></returns>
+    </member>
+    <member name="M:AssemblyToProcess.SimpleClass.PrivateMethod(System.String,System.String,System.String[])">
+      <summary>
+            Privates the method.
+            </summary>
+      <param name="notNull">The not null.</param>
+      <param name="canBeNull">The can be null.</param>
+      <param name="notNullAndItemNotNull">The not null and item not null.</param>
+      <returns></returns>
+    </member>
+    <member name="T:AssemblyToProcess.SimpleClass.NestedClass">
+      <summary>
+            A nested class
+            <p /><c>[UsedImplicitly]</c></summary>
+    </member>
+    <member name="P:AssemblyToProcess.SimpleClass.NestedClass.PublicProperty">
+      <summary>
+            Gets or sets the public property.
+            <p /><c>[PublicAPI]</c></summary>
+      <value>
+            The public property.
+            </value>
+    </member>
+  </members>
+</doc>

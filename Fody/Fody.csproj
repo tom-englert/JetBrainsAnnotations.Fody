@@ -73,6 +73,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="ModuleWeaver.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
+    <Compile Include="XmlDocumentation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">

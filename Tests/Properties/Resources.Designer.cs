@@ -19,7 +19,7 @@ namespace Tests.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -75,6 +75,32 @@ namespace Tests.Properties {
         internal static string ExpectedAnnotations {
             get {
                 return ResourceManager.GetString("ExpectedAnnotations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;doc&gt;
+        ///  &lt;assembly&gt;
+        ///    &lt;name&gt;AssemblyToProcess&lt;/name&gt;
+        ///  &lt;/assembly&gt;
+        ///  &lt;members&gt;
+        ///    &lt;member name=&quot;T:AssemblyToProcess.SimpleClass&quot;&gt;
+        ///      &lt;summary&gt;
+        ///            This is a simple class
+        ///            &lt;p /&gt;&lt;c&gt;[UsedImplicitly]&lt;/c&gt;&lt;/summary&gt;
+        ///    &lt;/member&gt;
+        ///    &lt;member name=&quot;F:AssemblyToProcess.SimpleClass.privateField&quot;&gt;
+        ///      &lt;summary&gt;
+        ///            The private field
+        ///            &lt;/summary&gt;
+        ///    &lt;/member&gt;
+        ///    &lt;member name=&quot;F:AssemblyToProcess.SimpleClass.publicField&quot;&gt;
+        ///      &lt;summary&gt;
+        ///            The pub [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ExpectedDocumentation {
+            get {
+                return ResourceManager.GetString("ExpectedDocumentation", resourceCulture);
             }
         }
     }

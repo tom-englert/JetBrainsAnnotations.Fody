@@ -36,10 +36,15 @@ namespace Tests
         private readonly string _afterAssemblyPath;
         [NotNull]
         private readonly string _annotations;
+        [NotNull]
+        private readonly string _documentation;
 
         public IntegrationTests()
         {
             _afterAssemblyPath = _beforeAssemblyPath.Replace(".dll", "2.dll");
+            var afterAssemblyDocumentation = Path.ChangeExtension(_afterAssemblyPath, ".xml");
+
+            File.Copy(Path.ChangeExtension(_beforeAssemblyPath, ".xml"), afterAssemblyDocumentation, true);
 
             var assemblyResolver = new MockAssemblyResolver();
 
@@ -57,12 +62,14 @@ namespace Tests
                 {
                     ModuleDefinition = moduleDefinition,
                     AssemblyResolver = assemblyResolver,
-                    ProjectDirectoryPath = projectDirectoryPath
+                    ProjectDirectoryPath = projectDirectoryPath,
+                    DocumentationFilePath = afterAssemblyDocumentation
                 };
 
                 weavingTask.Execute();
 
                 _annotations = XDocument.Load(targetName).ToString();
+                _documentation = XDocument.Load(afterAssemblyDocumentation).ToString();
 
                 moduleDefinition.Write(_afterAssemblyPath);
             }
@@ -91,6 +98,12 @@ namespace Tests
         public void AreExternalAnnotationsCorrect()
         {
             Assert.AreEqual(Resources.ExpectedAnnotations, _annotations);
+        }
+
+        [Test]
+        public void IsDocumentationProperlyDecorated()
+        {
+            Assert.AreEqual(Resources.ExpectedDocumentation, _documentation);
         }
 
 #if(DEBUG)

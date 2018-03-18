@@ -30,6 +30,8 @@ namespace JetBrainsAnnotations.Fody
         public IAssemblyResolver AssemblyResolver { get; set; }
         [NotNull, UsedImplicitly]
         public string ProjectDirectoryPath { get; set; }
+        [CanBeNull, UsedImplicitly]
+        public string DocumentationFilePath { get; set; }
 
         // ReSharper disable once NotNullMemberIsNotInitialized
         public ModuleWeaver()
@@ -61,10 +63,12 @@ namespace JetBrainsAnnotations.Fody
             Debug.Assert(jetbrainsAnnotations != null, "jetbrainsAnnotations != null");
             var elements = new Executor(ModuleDefinition, jetbrainsAnnotations).Execute();
 
-            if (!elements.Any())
-                return;
-
             Save(elements);
+
+            if (!string.IsNullOrEmpty(DocumentationFilePath) && File.Exists(DocumentationFilePath))
+            {
+                XmlDocumentation.Decorate(DocumentationFilePath, elements);
+            }
         }
 
         [NotNull, ItemNotNull]
