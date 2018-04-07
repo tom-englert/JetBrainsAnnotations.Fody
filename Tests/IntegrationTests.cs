@@ -61,7 +61,6 @@ namespace Tests
                 var weavingTask = new ModuleWeaver
                 {
                     ModuleDefinition = moduleDefinition,
-                    AssemblyResolver = assemblyResolver,
                     ProjectDirectoryPath = projectDirectoryPath,
                     DocumentationFilePath = afterAssemblyDocumentation
                 };

@@ -12,34 +12,15 @@ namespace JetBrainsAnnotations.Fody
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
 
+    using global::Fody;
+
     using JetBrains.Annotations;
 
     using Mono.Collections.Generic;
 
-    public class ModuleWeaver
+    public class ModuleWeaver : BaseModuleWeaver
     {
-        [NotNull, UsedImplicitly]
-        public Action<string> LogInfo { get; set; }
-        [NotNull, UsedImplicitly]
-        public Action<string> LogWarning { get; set; }
-        [NotNull, UsedImplicitly]
-        public Action<string> LogError { get; set; }
-        [NotNull, UsedImplicitly]
-        public ModuleDefinition ModuleDefinition { get; set; }
-        [NotNull, UsedImplicitly]
-        public IAssemblyResolver AssemblyResolver { get; set; }
-        [NotNull, UsedImplicitly]
-        public string ProjectDirectoryPath { get; set; }
-        [CanBeNull, UsedImplicitly]
-        public string DocumentationFilePath { get; set; }
-
-        // ReSharper disable once NotNullMemberIsNotInitialized
-        public ModuleWeaver()
-        {
-            LogInfo = LogWarning = LogError = _ => { };
-        }
-
-        public void Execute()
+        public override void Execute()
         {
             var assemblyReferences = AssemblyReferences;
             // ReSharper disable once PossibleNullReferenceException
@@ -58,7 +39,7 @@ namespace JetBrainsAnnotations.Fody
 
             assemblyReferences.Remove(jetbrainsAnnotationsReference);
 
-            var jetbrainsAnnotations = AssemblyResolver.Resolve(jetbrainsAnnotationsReference);
+            var jetbrainsAnnotations = ModuleDefinition.AssemblyResolver.Resolve(jetbrainsAnnotationsReference);
 
             Debug.Assert(jetbrainsAnnotations != null, "jetbrainsAnnotations != null");
             var elements = new Executor(ModuleDefinition, jetbrainsAnnotations).Execute();
@@ -69,6 +50,11 @@ namespace JetBrainsAnnotations.Fody
             {
                 XmlDocumentation.Decorate(DocumentationFilePath, elements);
             }
+        }
+
+        public override IEnumerable<string> GetAssembliesForScanning()
+        {
+            yield break;
         }
 
         [NotNull, ItemNotNull]
