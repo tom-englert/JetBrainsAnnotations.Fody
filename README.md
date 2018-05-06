@@ -43,8 +43,7 @@ For more information
 
 ## What it actually does to your project
 
-* Adds the `<project name>.ExternalAnnotations.xml` file to your project, and marks it as CopyToOutput.
-* Updates this file every time you compile.
+* Updates `<project name>.ExternalAnnotations.xml` every time you compile.
 
   NOTE: To make your annotations available to 3rd parties, you must ship this file along with the assembly.
 
@@ -54,7 +53,7 @@ For more information
 
 ## What you may need to change manually
 
-* If the `<project name>.ExternalAnnotations.xml` is not generated duing installation of the NuGet package, you will need to add it to your project manually.
+* Add the `<project name>.ExternalAnnotations.xml` to your project manually and mark it as content + copy to output.
 * Mark the reference to `Jetbrains.Annotations.dll` as `Copy Local => False`, so it won't get copied to your 
   target directory and eventually get picked up by installers.
 * If you deploy your project as a NuGet package, add `developmentDependency="true"` to the 
@@ -63,8 +62,12 @@ For more information
     ```xml
     <package id="JetBrains.Annotations" version="11.0.0" targetFramework="net452" developmentDependency="true" />
     ```
-
-
+  or if you are using a `PackageReference` in your project files, mark it as private assests:
+    ```xml
+    <PackageReference Include="JetBrains.Annotations" Version="*">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    ```
 
 
 ## Icon
