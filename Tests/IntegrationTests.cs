@@ -67,7 +67,7 @@ namespace Tests
                     ModuleDefinition = moduleDefinition,
                     ProjectDirectoryPath = projectDirectoryPath,
                     DocumentationFilePath = afterAssemblyDocumentation,
-                    Config = File.Exists(configPath) ? XElement.Load(configPath) : null,
+                    Config = File.Exists(configPath) ? XElement.Load(configPath).Element("JetBrainsAnnotations") : null,
                 };
 
                 weavingTask.Execute();

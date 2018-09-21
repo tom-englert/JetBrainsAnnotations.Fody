@@ -29,8 +29,7 @@ namespace JetBrainsAnnotations.Fody
             }
 
             // See if we should look for internally defined R# annotations
-            var config = Config?.Element("JetBrainsAnnotations");
-            var internalAssemblyName = config?.Attribute("assembly")?.Value;
+            var internalAssemblyName = Config?.Attribute("assembly")?.Value;
             var assemblyReferences = AssemblyReferences;
             AssemblyNameReference jetbrainsAnnotationsReference;
             if (internalAssemblyName == null)
@@ -61,7 +60,7 @@ namespace JetBrainsAnnotations.Fody
                     }
 
                     // Optionally remove. Don't by default, since we don't know if this assembly has other non-annotation code in it.
-                    if (XmlConvert.ToBoolean(config.Attribute("remove")?.Value ?? "false"))
+                    if (XmlConvert.ToBoolean(Config.Attribute("remove")?.Value ?? "false"))
                     {
                         assemblyReferences.Remove(jetbrainsAnnotationsReference);
                     }
