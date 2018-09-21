@@ -67,9 +67,13 @@ namespace JetBrainsAnnotations.Fody
                 }
             }
 
-            var jetbrainsAnnotations = ModuleDefinition.AssemblyResolver.Resolve(jetbrainsAnnotationsReference);
+            var jetbrainsAnnotations = jetbrainsAnnotationsReference == ModuleDefinition.Assembly.Name ? ModuleDefinition.Assembly : ModuleDefinition.AssemblyResolver.Resolve(jetbrainsAnnotationsReference);
+            if (jetbrainsAnnotations == null)
+            {
+                LogError($"Unable to load annotations assembly {jetbrainsAnnotationsReference}");
+                return;
+            }
 
-            Debug.Assert(jetbrainsAnnotations != null, "jetbrainsAnnotations != null");
             var elements = new Executor(ModuleDefinition, jetbrainsAnnotations).Execute();
 
             Save(elements);
