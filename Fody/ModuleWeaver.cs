@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
-
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
 
@@ -22,26 +22,58 @@ namespace JetBrainsAnnotations.Fody
     {
         public override void Execute()
         {
-            var assemblyReferences = AssemblyReferences;
-            // ReSharper disable once PossibleNullReferenceException
-            var jetbrainsAnnotationsReference = assemblyReferences.FirstOrDefault(x => x.Name.StartsWith("JetBrains.Annotations"));
-            if (jetbrainsAnnotationsReference == null)
-            {
-                LogWarning("Reference to JetBrains.Annotations not found.");
-                return;
-            }
-
             if (string.IsNullOrEmpty(ProjectDirectoryPath) || !Directory.Exists(ProjectDirectoryPath))
             {
                 LogError("ProjectDirectoryPath is not a valid directory: " + ProjectDirectoryPath);
                 return;
             }
 
-            assemblyReferences.Remove(jetbrainsAnnotationsReference);
+            // See if we should look for internally defined R# annotations
+            var internalAssemblyName = Config?.Attribute("assembly")?.Value;
+            var assemblyReferences = AssemblyReferences;
+            AssemblyNameReference jetbrainsAnnotationsReference;
+            if (internalAssemblyName == null)
+            {
+                // ReSharper disable once PossibleNullReferenceException
+                jetbrainsAnnotationsReference = assemblyReferences.FirstOrDefault(x => x.Name.StartsWith("JetBrains.Annotations"));
+                if (jetbrainsAnnotationsReference == null)
+                {
+                    LogWarning("Reference to JetBrains.Annotations not found.");
+                    return;
+                }
 
-            var jetbrainsAnnotations = ModuleDefinition.AssemblyResolver.Resolve(jetbrainsAnnotationsReference);
+                assemblyReferences.Remove(jetbrainsAnnotationsReference);
+            }
+            else
+            {
+                if (ModuleDefinition.Assembly.Name.Name == internalAssemblyName)
+                {
+                    jetbrainsAnnotationsReference = ModuleDefinition.Assembly.Name;
+                }
+                else
+                {
+                    jetbrainsAnnotationsReference = assemblyReferences.FirstOrDefault(x => x.Name == internalAssemblyName);
+                    if (jetbrainsAnnotationsReference == null)
+                    {
+                        LogWarning($"Reference to {internalAssemblyName} not found.");
+                        return;
+                    }
 
-            Debug.Assert(jetbrainsAnnotations != null, "jetbrainsAnnotations != null");
+                    // Optionally remove. Don't by default, since we don't know if this assembly has other non-annotation code in it.
+                    if (XmlConvert.ToBoolean(Config.Attribute("remove")?.Value ?? "false"))
+                    {
+                        assemblyReferences.Remove(jetbrainsAnnotationsReference);
+                    }
+                }
+            }
+
+            var jetbrainsAnnotations = jetbrainsAnnotationsReference == ModuleDefinition.Assembly.Name ? ModuleDefinition.Assembly : ModuleDefinition.AssemblyResolver.Resolve(jetbrainsAnnotationsReference);
+            if (jetbrainsAnnotations == null)
+            {
+                LogError($"Unable to load annotations assembly {jetbrainsAnnotationsReference}");
+                return;
+            }
+
             var elements = new Executor(ModuleDefinition, jetbrainsAnnotations).Execute();
 
             Save(elements);
@@ -118,7 +150,7 @@ namespace JetBrainsAnnotations.Fody
                 _root = new List<XElement>();
                 _allAttributes = new HashSet<string>(GetAllAttributes(jetbrainsAnnotations));
             }
-
+            
             [NotNull, ItemNotNull]
             [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
             [SuppressMessage("ReSharper", "PossibleNullReferenceException")]

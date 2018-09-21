@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyToProcess.InternalAttributes", "AssemblyToProcess.InternalAttributes\AssemblyToProcess.InternalAttributes.csproj", "{472E0999-01B0-45BD-8049-FE2C36249C51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalAttributes", "InternalAttributes\InternalAttributes.csproj", "{789ECD9F-3F03-4F22-9593-CB2E98B79FD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +38,14 @@ Global
 		{F967F593-8348-4071-BF5F-D4E3002C4139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F967F593-8348-4071-BF5F-D4E3002C4139}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F967F593-8348-4071-BF5F-D4E3002C4139}.Release|Any CPU.Build.0 = Release|Any CPU
+		{472E0999-01B0-45BD-8049-FE2C36249C51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{472E0999-01B0-45BD-8049-FE2C36249C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{472E0999-01B0-45BD-8049-FE2C36249C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{472E0999-01B0-45BD-8049-FE2C36249C51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{789ECD9F-3F03-4F22-9593-CB2E98B79FD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{789ECD9F-3F03-4F22-9593-CB2E98B79FD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{789ECD9F-3F03-4F22-9593-CB2E98B79FD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{789ECD9F-3F03-4F22-9593-CB2E98B79FD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

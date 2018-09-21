@@ -69,6 +69,25 @@ For more information
     </PackageReference>
     ```
 
+## Using embedded ReSharper annotations
+
+If your project [embeds ReSharper annotations](https://www.jetbrains.com/help/resharper/Code_Analysis__Annotations_in_Source_Code.html#embedding-declarations-of-code-annotations-in-your-source-code),
+or references another project that has such embedded annotations, you can modify the Fody configuration file to have JetBrainsAnnotations
+recognize this. In your `FodyWeavers.xml`, use:
+
+```xml
+<Weavers>
+  <JetBrainsAnnotations assembly="MyEmbeddedAnnotations" remove="true"/> 
+</Weavers>
+```
+
+where the `assembly` attributes indicates the simple name of the assembly containing embedded annotations, and `remove`
+optionally indicates (default is `remove='false'`) whether to remove the reference to `assembly`, as JetBrainsAnnotations does for `Jetbrains.Annotations.dll`.
+
+The `assembly` may also refer to the same assembly being weaved, if ReSharper annotations are embedded in the same assembly for
+which you're generating external annotations. In which case, the `remove` attribute has no effect.
+
+The embedded ReSharper annotations can be either `internal` or `public`.
 
 ## Icon
 
