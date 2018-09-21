@@ -77,6 +77,10 @@
       <Project>{C3578A7B-09A6-4444-9383-0DEAFA4958BD}</Project>
       <Name>Fody</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InternalAttributes\InternalAttributes.csproj">
+      <Project>{789ecd9f-3f03-4f22-9593-cb2e98b79fd9}</Project>
+      <Name>InternalAttributes</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Global.ruleset">

@@ -18,7 +18,8 @@ namespace Tests
 
     using JetBrains.Annotations;
 
-    [TestFixture]
+    [TestFixture(@"..\..\..\AssemblyToProcess\bin\"+Configuration+@"\AssemblyToProcess.dll", TestName = "UsingJetBrainsReference")]
+    [TestFixture(@"..\..\..\AssemblyToProcess.InternalAttributes\bin\"+Configuration+@"\AssemblyToProcess.dll", TestName = "UsingInternalAnnotations")]
     public class IntegrationTests
     {
 #if (!DEBUG)
@@ -29,9 +30,7 @@ namespace Tests
         [NotNull]
         private readonly Assembly _assembly;
         [NotNull]
-        // ReSharper disable once AssignNullToNotNullAttribute
-        // ReSharper disable once PossibleNullReferenceException
-        private readonly string _beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, $@"..\..\..\AssemblyToProcess\bin\{Configuration}\AssemblyToProcess.dll"));
+        private readonly string _beforeAssemblyPath;
         [NotNull]
         private readonly string _afterAssemblyPath;
         [NotNull]
@@ -39,8 +38,12 @@ namespace Tests
         [NotNull]
         private readonly string _documentation;
 
-        public IntegrationTests()
+        public IntegrationTests(string beforeAssemblyPath)
         {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            // ReSharper disable once PossibleNullReferenceException
+            _beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, beforeAssemblyPath));
+
             _afterAssemblyPath = _beforeAssemblyPath.Replace(".dll", "2.dll");
             var afterAssemblyDocumentation = Path.ChangeExtension(_afterAssemblyPath, ".xml");
 
@@ -58,11 +61,13 @@ namespace Tests
 
                 Debug.Assert(moduleDefinition != null, "moduleDefinition != null");
                 Debug.Assert(projectDirectoryPath != null, "projectDirectoryPath != null");
+                var configPath = Path.Combine(projectDirectoryPath, "FodyWeavers.xml");
                 var weavingTask = new ModuleWeaver
                 {
                     ModuleDefinition = moduleDefinition,
                     ProjectDirectoryPath = projectDirectoryPath,
-                    DocumentationFilePath = afterAssemblyDocumentation
+                    DocumentationFilePath = afterAssemblyDocumentation,
+                    Config = File.Exists(configPath) ? XElement.Load(configPath) : null,
                 };
 
                 weavingTask.Execute();
