@@ -8,5 +8,5 @@
 static class Product
 {
     public const string Name = "JetBrainsAnnotations.Fody";
-    public const string Version = "2.4.0";
+    public const string Version = "2.5.0";
 }
