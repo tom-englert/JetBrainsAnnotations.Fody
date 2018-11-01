@@ -7,7 +7,7 @@
     <Copyright>Copyright © tom-englert.de 2017-2018. Distributed under the MIT License.</Copyright>
     <Product>JetBrainsAnnotations.Fody</Product>
     <Title>JetBrainsAnnotations.Fody</Title>
-    <Version>2.5</Version>
+    <Version>2.6</Version>
     <Description>Converts all JetBrains ReSharper code annotations attributes to External Annotations, so you can provide R# annotations to 3rd parties but don't need to deploy JetBrainsAnnotations.dll.</Description>
     <PackageTags>R#, ReSharper, JetBrains Annotations, ILWeaving, Fody, Cecil</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
