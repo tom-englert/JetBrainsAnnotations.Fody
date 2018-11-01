@@ -1,20 +1,25 @@
 [![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody/Fody)
 [![NuGet Status](http://img.shields.io/nuget/v/JetBrainsAnnotations.Fody.svg?style=flat)](https://www.nuget.org/packages/JetBrainsAnnotations.Fody/)
-![Badge](https://tom-englert.visualstudio.com/_apis/public/build/definitions/75bf84d2-d359-404a-a712-07c9f693f635/14/badge)
+[![Build status](https://ci.appveyor.com/api/projects/status/da0rw28krhjubnf7?svg=true)](https://ci.appveyor.com/project/tom-englert/jetbrainsannotations-fody)
 
 ## This is an add-in for [Fody](https://github.com/Fody/Fody/) 
 
-![Icon](https://raw.github.com/Fody/JetBrainsAnnotations/master/Icons/package_icon.png)
+![Icon](https://raw.github.com/Fody/JetBrainsAnnotations/master/package_icon.png)
 
 Converts all JetBrains ReSharper code annotation attributes to [External Annotations](https://www.jetbrains.com/help/resharper/Code_Analysis__External_Annotations.html), 
 so you can provide R# annotations to 3rd parties but don't need to deploy JetBrainsAnnotations.dll. 
 
 
-## The nuget package
+## NuGet installation
 
-https://nuget.org/packages/JetBrainsAnnotations.Fody/
+Install the [JetBrainsAnnotations.Fody NuGet package](https://nuget.org/packages/JetBrainsAnnotations.Fody/) and update the [Fody NuGet package](https://nuget.org/packages/Fody/):
 
-    PM> Install-Package JetBrainsAnnotations.Fody
+```
+PM> Install-Package JetBrainsAnnotations.Fody
+PM> Update-Package Fody
+```
+
+The `Update-Package Fody` is required since NuGet always defaults to the oldest, and most buggy, version of any dependency.
 
 
 ## What are JetBrains Annotations
