@@ -1,83 +1,29 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Xml.Linq;
-
-using JetBrainsAnnotations.Fody;
-
-using Mono.Cecil;
-
-using NUnit.Framework;
-
-using Tests.Properties;
-
-namespace Tests
+﻿namespace Tests
 {
-    using System.Diagnostics;
+    using System;
+    using System.IO;
+    using System.Reflection;
+    using System.Xml.Linq;
 
     using JetBrains.Annotations;
 
-    [TestFixture]
+    using Tests.Properties;
+
+    using Xunit;
+
     public class IntegrationTests
     {
-#if (!DEBUG)
-        private const string Configuration = "Release";
-#else
-        private const string Configuration = "Debug";
-#endif
         [NotNull]
         private readonly Assembly _assembly;
-        [NotNull]
-        // ReSharper disable once AssignNullToNotNullAttribute
-        // ReSharper disable once PossibleNullReferenceException
-        private readonly string _beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, $@"..\..\..\AssemblyToProcess\bin\{Configuration}\AssemblyToProcess.dll"));
-        [NotNull]
-        private readonly string _afterAssemblyPath;
-        [NotNull]
-        private readonly string _annotations;
-        [NotNull]
-        private readonly string _documentation;
 
         public IntegrationTests()
         {
-            _afterAssemblyPath = _beforeAssemblyPath.Replace(".dll", "2.dll");
-            var afterAssemblyDocumentation = Path.ChangeExtension(_afterAssemblyPath, ".xml");
+            var thisFolder = Path.GetDirectoryName(new Uri(GetType().Assembly.CodeBase).LocalPath);
 
-            File.Copy(Path.ChangeExtension(_beforeAssemblyPath, ".xml"), afterAssemblyDocumentation, true);
-
-            var assemblyResolver = new MockAssemblyResolver();
-
-            using (var moduleDefinition = ModuleDefinition.ReadModule(_beforeAssemblyPath, new ReaderParameters { AssemblyResolver = assemblyResolver}))
-            {
-                var projectDirectoryPath = Path.GetDirectoryName(_beforeAssemblyPath);
-                var targetName = Path.ChangeExtension(_beforeAssemblyPath, ".ExternalAnnotations.xml");
-
-                if (File.Exists(targetName))
-                    File.Delete(targetName);
-
-                Debug.Assert(moduleDefinition != null, "moduleDefinition != null");
-                Debug.Assert(projectDirectoryPath != null, "projectDirectoryPath != null");
-                var weavingTask = new ModuleWeaver
-                {
-                    ModuleDefinition = moduleDefinition,
-                    ProjectDirectoryPath = projectDirectoryPath,
-                    DocumentationFilePath = afterAssemblyDocumentation
-                };
-
-                weavingTask.Execute();
-
-                _annotations = XDocument.Load(targetName).ToString();
-                _documentation = XDocument.Load(afterAssemblyDocumentation).ToString();
-
-                moduleDefinition.Write(_afterAssemblyPath);
-            }
-
-            // ReSharper disable once AssignNullToNotNullAttribute
-            _assembly = Assembly.LoadFile(_afterAssemblyPath);
+            _assembly = Assembly.LoadFrom(Path.Combine(thisFolder, "AssemblyToProcess.dll"));
         }
 
-        [Test]
+        [Fact]
         public void CanCreateClass()
         {
             var type = _assembly.GetType("AssemblyToProcess.SimpleClass");
@@ -85,33 +31,28 @@ namespace Tests
             Activator.CreateInstance(type);
         }
 
-        [Test]
+        [Fact]
         public void ReferenceIsRemoved()
         {
             // ReSharper disable once PossibleNullReferenceException
-            Assert.IsFalse(_assembly.GetReferencedAssemblies().Any(x => x.Name == "JetBrains.Annotations"));
+            Assert.DoesNotContain(_assembly.GetReferencedAssemblies(), x => x.Name == "JetBrains.Annotations");
         }
 
 
-        [Test]
+        [Fact]
         public void AreExternalAnnotationsCorrect()
         {
-            Assert.AreEqual(Resources.ExpectedAnnotations, _annotations);
+            var annotations = XDocument.Load(Path.ChangeExtension(_assembly.Location, ".ExternalAnnotations.xml")).ToString();
+
+            Assert.Equal(Resources.ExpectedAnnotations, annotations);
         }
 
-        [Test]
+        [Fact]
         public void IsDocumentationProperlyDecorated()
         {
-            Assert.AreEqual(Resources.ExpectedDocumentation, _documentation);
-        }
+            var _documentation = XDocument.Load(Path.ChangeExtension(_assembly.Location, ".xml")).ToString();
 
-#if(DEBUG)
-        [Test]
-        public void PeVerify()
-        {
-            Verifier.Verify(_beforeAssemblyPath, _afterAssemblyPath);
+            Assert.Equal(Resources.ExpectedDocumentation, _documentation);
         }
-#endif
-
     }
 }

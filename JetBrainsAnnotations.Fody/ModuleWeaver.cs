@@ -1,30 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-
-using Mono.Cecil;
-using Mono.Cecil.Rocks;
-
-namespace JetBrainsAnnotations.Fody
+﻿namespace JetBrainsAnnotations.Fody
 {
+    using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Linq;
+    using System.Xml.Linq;
 
     using global::Fody;
 
     using JetBrains.Annotations;
 
+    using Mono.Cecil;
+    using Mono.Cecil.Rocks;
     using Mono.Collections.Generic;
 
     public class ModuleWeaver : BaseModuleWeaver
     {
         public override void Execute()
         {
+            // Debugger.Launch();
+
             var assemblyReferences = AssemblyReferences;
             // ReSharper disable once PossibleNullReferenceException
-            var jetbrainsAnnotationsReference = assemblyReferences.FirstOrDefault(x => x.Name.StartsWith("JetBrains.Annotations"));
+
+            const string JetBrainsAnnotations = "JetBrains.Annotations";
+
+            var jetbrainsAnnotationsReference = assemblyReferences.FirstOrDefault(x => x.Name.StartsWith(JetBrainsAnnotations));
             if (jetbrainsAnnotationsReference == null)
             {
                 LogWarning("Reference to JetBrains.Annotations not found.");
@@ -38,6 +41,7 @@ namespace JetBrainsAnnotations.Fody
             }
 
             assemblyReferences.Remove(jetbrainsAnnotationsReference);
+            ReferenceCopyLocalPaths.RemoveAll(file => string.Equals(JetBrainsAnnotations, Path.GetFileNameWithoutExtension(file), StringComparison.OrdinalIgnoreCase));
 
             var jetbrainsAnnotations = ModuleDefinition.AssemblyResolver.Resolve(jetbrainsAnnotationsReference);
 
@@ -52,10 +56,9 @@ namespace JetBrainsAnnotations.Fody
             }
         }
 
-        public override IEnumerable<string> GetAssembliesForScanning()
-        {
-            yield break;
-        }
+        public override IEnumerable<string> GetAssembliesForScanning() => Enumerable.Empty<string>();
+
+        public override bool ShouldCleanReference => true;
 
         [NotNull, ItemNotNull]
         // ReSharper disable once AssignNullToNotNullAttribute
