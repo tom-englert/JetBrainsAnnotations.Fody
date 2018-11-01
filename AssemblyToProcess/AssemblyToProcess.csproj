@@ -24,6 +24,6 @@
     </None>
   </ItemGroup>
 
-  <Import Project="..\JetBrainsAnnotations\Build\JetBrainsAnnotations.targets" />
+  <Import Project="..\JetBrainsAnnotations\Build\JetBrainsAnnotations.Fody.targets" />
   
 </Project>
