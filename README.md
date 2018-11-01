@@ -31,8 +31,9 @@ This allows you to better leverage the ReSharper intellisense.
 To provide the annotations to 3rd parties you must define [`JETBRAINS_ANNOTATIONS`](https://www.jetbrains.com/help/resharper/Code_Analysis__Annotations_in_Source_Code.html) to include the attributes in your assembly.
 However now you have a reference and would need to ship the JetBrainsAnnotations.dll with your product. 
 
-This Fody plugin converts all attributes to an external annotations XML file on the fly, so you 
-can ship just the text file with your assembly and don't need to reference JetBrainsAnnotations.
+This Fody plugin adds the define [`JETBRAINS_ANNOTATIONS`](https://www.jetbrains.com/help/resharper/Code_Analysis__Annotations_in_Source_Code.html) 
+to your existing defines, then converts all attributes to an external annotations XML file on the fly, and then removes the reference to 
+`JetBrains.Annotations` again so you can ship just the text file with your assembly and don't need to reference JetBrainsAnnotations.
 
 For more information 
 
