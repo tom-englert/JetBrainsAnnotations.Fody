@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata minClientVersion="2.8">
+    <id>JetBrainsAnnotations.Fody</id>
+    <version>$version$</version>
+    <title>JetBrainsAnnotations.Fody</title>
+    <authors>Tom Englert, Simon Cropp</authors>
+    <owners>Tom Englert</owners>
+    <developmentDependency>true</developmentDependency>
+    <licenseUrl>https://raw.github.com/tom-englert/JetBrainsAnnotations.Fody/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/tom-englert/JetBrainsAnnotations.Fody</projectUrl>
+    <iconUrl>https://raw.github.com/tom-englert/JetBrainsAnnotations.Fody/master/Icons/package_icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      Converts all JetBrains ReSharper code annotations attributes to External Annotations,
+      so you can provide R# annotations to 3rd parties but don't need to deploy JetBrainsAnnotations.dll.
+    </description>
+    <language>en-US</language>
+    <tags>R#, ReSharper, JetBrains Annotations, ILWeaving, Fody, Cecil</tags>
+    <dependencies>
+      <dependency id="Fody" version="[3.2.4, 4.0.0)"/>
+    </dependencies>
+  </metadata>
+</package>

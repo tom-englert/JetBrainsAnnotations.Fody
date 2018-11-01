@@ -73,7 +73,7 @@
     <Compile Include="Verifier.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fody\Fody.csproj">
+    <ProjectReference Include="..\JetbrainsAnnotatinos.Fody\JetBrainsAnnotations.Fody.csproj">
       <Project>{C3578A7B-09A6-4444-9383-0DEAFA4958BD}</Project>
       <Name>Fody</Name>
     </ProjectReference>
