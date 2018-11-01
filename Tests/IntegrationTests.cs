@@ -14,13 +14,13 @@
     public class IntegrationTests
     {
         [NotNull]
+        private readonly string _targetFolder = AppDomain.CurrentDomain.BaseDirectory;
+        [NotNull]
         private readonly Assembly _assembly;
 
         public IntegrationTests()
         {
-            var thisFolder = Path.GetDirectoryName(GetType().Assembly.Location);
-
-            _assembly = Assembly.LoadFrom(Path.Combine(thisFolder, "AssemblyToProcess.dll"));
+            _assembly = Assembly.LoadFrom(Path.Combine(_targetFolder, "AssemblyToProcess.dll"));
         }
 
         [Fact]
@@ -42,7 +42,7 @@
         [Fact]
         public void AreExternalAnnotationsCorrect()
         {
-            var annotations = XDocument.Load(Path.ChangeExtension(_assembly.Location, ".ExternalAnnotations.xml")).ToString();
+            var annotations = XDocument.Load(Path.ChangeExtension(_targetFolder, ".ExternalAnnotations.xml")).ToString();
 
             Assert.Equal(Resources.ExpectedAnnotations, annotations);
         }
@@ -50,7 +50,7 @@
         [Fact]
         public void IsDocumentationProperlyDecorated()
         {
-            var _documentation = XDocument.Load(Path.ChangeExtension(_assembly.Location, ".xml")).ToString();
+            var _documentation = XDocument.Load(Path.ChangeExtension(_targetFolder, ".xml")).ToString();
 
             Assert.Equal(Resources.ExpectedDocumentation, _documentation);
         }
