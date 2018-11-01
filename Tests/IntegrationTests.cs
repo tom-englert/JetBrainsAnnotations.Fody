@@ -18,7 +18,7 @@
 
         public IntegrationTests()
         {
-            var thisFolder = Path.GetDirectoryName(new Uri(GetType().Assembly.CodeBase).LocalPath);
+            var thisFolder = Path.GetDirectoryName(GetType().Assembly.Location);
 
             _assembly = Assembly.LoadFrom(Path.Combine(thisFolder, "AssemblyToProcess.dll"));
         }
