@@ -2,43 +2,13 @@
 <Project>
 
   <PropertyGroup>
-    <Authors>tom-englert</Authors>
-    <Company>tom-englert.de</Company>
     <Copyright>Copyright © tom-englert.de 2017-2018. Distributed under the MIT License.</Copyright>
     <Product>JetBrainsAnnotations.Fody</Product>
-    <Title>JetBrainsAnnotations.Fody</Title>
     <Version>2.6</Version>
-    <Description>Converts all JetBrains ReSharper code annotations attributes to External Annotations, so you can provide R# annotations to 3rd parties but don't need to deploy JetBrainsAnnotations.dll.</Description>
     <PackageTags>R#, ReSharper, JetBrains Annotations, ILWeaving, Fody, Cecil</PackageTags>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <GithubOrganization>tom-englert</GithubOrganization>
+    <Description>Converts all JetBrains ReSharper code annotations attributes to External Annotations, so you can provide R# annotations to 3rd parties but don't need to deploy JetBrainsAnnotations.dll.</Description>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net40-client'">
-    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>client</TargetFrameworkProfile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'portable40-net40+sl5+win8+wp8+wpa81'">
-    <TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile328</TargetFrameworkProfile>
-    <DefineConstants>$(DefineConstants);PORTABLE</DefineConstants>
-  </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'portable40-net40+sl5+win8+wp8+wpa81'">
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <WeaverFiles Include="$(SolutionDir)$(Product)\bin\$(Configuration)\Net46\$(Product).dll" />
-  </ItemGroup>
+  <Import Project="Common.props" />
 
 </Project>

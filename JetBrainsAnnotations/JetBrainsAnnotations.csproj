@@ -1,19 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>portable40-net40+sl5+win8+wp8+wpa81;net20;netstandard1.0;netstandard2.0</TargetFrameworks>
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeJetBrainsAnnotationsTargets</TargetsForTfmSpecificContentInPackage>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Common.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fody" Version="3.2.16" Exclude="" />
-    <PackageReference Include="FodyPackaging" Version="3.2.16" PrivateAssets="all" />
+    <PackageReference Include="FodyPackaging" Version="3.2.16" PrivateAssets="All" />
+    <PackageReference Include="Fody" Version="3.2.16" PrivateAssets="None" />
   </ItemGroup>
-
-  <Target Name="IncludeJetBrainsAnnotationsTargets">
-    <CreateItem Include="build\$(ProjectName).Fody.targets" AdditionalMetadata="PackagePath=build">
-      <Output TaskParameter="Include" ItemName="TfmSpecificPackageFile" />
-    </CreateItem>
-  </Target>
 
 </Project>
