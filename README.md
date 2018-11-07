@@ -10,9 +10,9 @@ Converts all JetBrains ReSharper code annotation attributes to [External Annotat
 so you can provide R# annotations to 3rd parties but don't need to deploy JetBrainsAnnotations.dll. 
 
 
-## NuGet installation
+## Installation
 
-Install the [JetBrainsAnnotations.Fody NuGet package](https://nuget.org/packages/JetBrainsAnnotations.Fody/) and update the [Fody NuGet package](https://nuget.org/packages/Fody/):
+1. Install the [JetBrainsAnnotations.Fody NuGet package](https://nuget.org/packages/JetBrainsAnnotations.Fody/) and update the [Fody NuGet package](https://nuget.org/packages/Fody/):
 
 ```
 PM> Install-Package JetBrainsAnnotations.Fody
@@ -21,6 +21,12 @@ PM> Update-Package Fody
 
 The `Update-Package Fody` is required since NuGet always defaults to the oldest, and most buggy, version of any dependency.
 
+2. Add `JetBrainsAnnotations` to your [FodyWeavers.xml](https://github.com/Fody/Fody/#add-fodyweaversxml):
+```xml
+<Weavers>
+  <JetBrainsAnnotations />
+</Weavers>
+```
 
 ## What are JetBrains Annotations
 
