@@ -24,7 +24,7 @@ The `Update-Package Fody` is required since NuGet always defaults to the oldest,
 
 ## What are JetBrains Annotations
 
-The assembly JetBrainsAnnotations.dll is shipped as a [nuget package](https://www.nuget.org/packages/JetBrains.Annotations/).
+The assembly `JetBrains.Annotations.dll` is shipped as a [nuget package](https://www.nuget.org/packages/JetBrains.Annotations/).
 It provides standard JetBrains ReSharper code annotation attribute implementations. 
 This allows you to better leverage the ReSharper intellisense.
 
@@ -33,9 +33,9 @@ However now you have a reference and would need to ship the JetBrainsAnnotations
 
 This Fody plugin adds the define [`JETBRAINS_ANNOTATIONS`](https://www.jetbrains.com/help/resharper/Code_Analysis__Annotations_in_Source_Code.html) 
 to your existing defines, then converts all attributes to an external annotations XML file on the fly, and then removes the reference to 
-`JetBrains.Annotations` again so you can ship just the text file with your assembly and don't need to reference JetBrainsAnnotations.
+`JetBrains.Annotations` again so you can ship just the text file with your assembly and don't need to deploy `JetBrains.Annotations.dll`.
 
-For more information 
+For more information about JetBrains Annotations read:
 
  * http://www.jetbrains.com/resharper/webhelp/Code_Analysis__External_Annotations.html 
  * http://www.jetbrains.com/resharper/features/code_analysis.html#Annotated_Framework
