@@ -3,22 +3,13 @@
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);JETBRAINS_ANNOTATIONS</DefineConstants>
-    <TargetsForTfmSpecificContentInPackage Condition="'$(ExcludeExternalAnnotationsFromPackages)'!='true'">IncludeExternalAnnotationsInPackageTarget;$(TargetsForTfmSpecificContentInPackage)</TargetsForTfmSpecificContentInPackage>
   </PropertyGroup>
   
   <ItemGroup>
-    <None Update="*.ExternalAnnotations.xml">
+    <None Include="$(ProjectName).ExternalAnnotations.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <TfmSpecificPackageFile Include="$(OutDir)$(ProjectName).ExternalAnnotations.xml" PackagePath="lib\$(TargetFramework)\%(Filename)%(Extension)" />
   </ItemGroup>
-  
-  <Target Name="IncludeExternalAnnotationsInPackageTarget">
-    <ItemGroup>
-      <ExternalAnnotationsToInclude Include="$(TargetDir)*.ExternalAnnotations.xml" />
-    </ItemGroup>
-    <CreateItem Include="@(ExternalAnnotationsToInclude)" AdditionalMetadata="PackagePath=lib\$(TargetFramework)">
-      <Output TaskParameter="Include" ItemName="TfmSpecificPackageFile" />
-    </CreateItem>
-  </Target>
-  
+
 </Project>
