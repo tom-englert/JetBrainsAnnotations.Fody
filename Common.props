@@ -7,6 +7,22 @@
     <Title Condition="'$(Title)' == ''">$(Product)</Title>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <GitHubOrganization>tom-englert</GitHubOrganization>
+    <PackageId>$(MSBuildProjectName).Fody</PackageId>
+    <LangVersion>latest</LangVersion>
+    <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageIconFile Include="$(SolutionDir)*icon*.png" />
+    <PackageLicenseFile Include="$(SolutionDir)*license*" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <PackageIconFileName Condition="'$(PackageIconFileName)' == ''">@(PackageIconFile->'%(Filename)%(Extension)')</PackageIconFileName>
+    <PackageLicenseFileName Condition="'$(PackageLicenseFileName)' == ''">@(PackageLicenseFile->'%(Filename)%(Extension)')</PackageLicenseFileName>
+    <PackageProjectUrl>http://github.com/$(GitHubOrganization)/$(PackageId)</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/$(GitHubOrganization)/$(PackageId)/master/$(PackageIconFileName)</PackageIconUrl>
+    <PackageLicenseFile>$(PackageLicenseFileName)</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40-client'">
@@ -34,5 +50,9 @@
   <ItemGroup>
     <TfmSpecificPackageFile Include="build\*.targets" PackagePath="build" />
   </ItemGroup>
+
+  <Target Name="LogTargetFramework" BeforeTargets="CoreCompile">
+    <Message Text="TargetFramework: $(TargetFramework): ID=$(TargetFrameworkIdentifier), Version=$(TargetFrameworkVersion), Profile=$(TargetFrameworkProfile)" />
+  </Target>
 
 </Project>
