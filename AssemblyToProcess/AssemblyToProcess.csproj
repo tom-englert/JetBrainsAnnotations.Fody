@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net20;net40;net46;netstandard1.0;netstandard1.4;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net20;net40;net472;netstandard1.0;netstandard1.4;netstandard2.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <WeaverFiles Include="$(SolutionDir)$(SolutionName)\bin\$(Configuration)\Net46\$(SolutionName).dll" />
+    <WeaverFiles Include="$(SolutionDir)$(SolutionName)\bin\$(Configuration)\net472\$(SolutionName).dll" />
   </ItemGroup>
 
   <ItemGroup>

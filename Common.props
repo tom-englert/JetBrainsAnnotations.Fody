@@ -44,10 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <WeaverFiles Include="$(SolutionDir)$(SolutionName)\bin\$(Configuration)\Net46\$(SolutionName).dll" />
-  </ItemGroup>
-
-  <ItemGroup>
     <TfmSpecificPackageFile Include="build\*.targets" PackagePath="build" />
   </ItemGroup>
 
