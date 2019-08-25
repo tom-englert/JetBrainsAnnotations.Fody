@@ -12,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FodyPackaging" Version="4.2.1" PrivateAssets="All" />
-    <PackageReference Include="Fody" Version="4.2.1" PrivateAssets="None" />
-    <PackageReference Include="JetBrains.Annotations" Version="2019.1.1" PrivateAssets="None" />
+    <PackageReference Include="FodyPackaging" Version="6.0.0" PrivateAssets="All" />
+    <PackageReference Include="Fody" Version="6.0.0" PrivateAssets="None" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" PrivateAssets="None" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19270-01" PrivateAssets="All" />
   </ItemGroup>
 
