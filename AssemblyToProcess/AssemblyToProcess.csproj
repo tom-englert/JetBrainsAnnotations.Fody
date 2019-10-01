@@ -19,10 +19,6 @@
     <WeaverFiles Include="$(SolutionDir)$(SolutionName)\bin\$(Configuration)\net472\$(SolutionName).dll" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\license.txt" Link="license.txt" Pack="true" PackagePath="" />
-  </ItemGroup>
-
   <Import Project="..\JetBrainsAnnotations\Build\JetBrainsAnnotations.Fody.targets" />
 
 </Project>

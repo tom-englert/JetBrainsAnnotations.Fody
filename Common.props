@@ -13,15 +13,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageIconFile Include="$(SolutionDir)*icon*.png" />
-    <PackageLicenseFile Include="$(SolutionDir)*license*" />
+    <PackageIconFiles Include="$(SolutionDir)*icon*.png" />
+    <PackageLicenseFiles Include="$(SolutionDir)*license*" />
   </ItemGroup>
 
   <PropertyGroup>
-    <PackageIconFileName Condition="'$(PackageIconFileName)' == ''">@(PackageIconFile->'%(Filename)%(Extension)')</PackageIconFileName>
-    <PackageLicenseFileName Condition="'$(PackageLicenseFileName)' == ''">@(PackageLicenseFile->'%(Filename)%(Extension)')</PackageLicenseFileName>
+    <PackageIconFileName Condition="'$(PackageIconFileName)' == ''">@(PackageIconFiles->'%(Filename)%(Extension)')</PackageIconFileName>
+    <PackageLicenseFileName Condition="'$(PackageLicenseFileName)' == ''">@(PackageLicenseFiles->'%(Filename)%(Extension)')</PackageLicenseFileName>
     <PackageProjectUrl>http://github.com/$(GitHubOrganization)/$(PackageId)</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/$(GitHubOrganization)/$(PackageId)/master/$(PackageIconFileName)</PackageIconUrl>
+    <PackageIcon>$(PackageIconFileName)</PackageIcon>
     <PackageLicenseFile>$(PackageLicenseFileName)</PackageLicenseFile>
   </PropertyGroup>
 
@@ -45,6 +45,11 @@
 
   <ItemGroup>
     <TfmSpecificPackageFile Include="build\*.targets" PackagePath="build" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="@(PackageIconFiles)" Link="$(PackageIconFileName)" Pack="true" PackagePath="\" />
+    <None Include="@(PackageLicenseFiles)" Link="$(PackageLicenseFileName)" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <Target Name="LogTargetFramework" BeforeTargets="CoreCompile">
