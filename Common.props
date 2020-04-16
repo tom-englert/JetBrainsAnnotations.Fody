@@ -10,6 +10,7 @@
     <PackageId>$(MSBuildProjectName).Fody</PackageId>
     <LangVersion>latest</LangVersion>
     <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
+    <DevelopmentDependency>true</DevelopmentDependency>
   </PropertyGroup>
 
   <ItemGroup>
