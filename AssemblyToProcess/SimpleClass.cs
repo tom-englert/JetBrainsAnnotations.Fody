@@ -117,7 +117,7 @@ namespace AssemblyToProcess
         /// <param name="notNullAndItemNotNull">The not null and item not null.</param>
         /// <returns></returns>
         [NotNull]
-        public string NotNullMethod([NotNull] string notNull, [CanBeNull] string canBeNull, [NotNull, ItemNotNull] string[] notNullAndItemNotNull)
+        public string NotNullMethod([NotNull][System.Diagnostics.CodeAnalysis.NotNull] string notNull, [CanBeNull] string canBeNull, [NotNull, ItemNotNull] string[] notNullAndItemNotNull)
         {
             return "";
         }

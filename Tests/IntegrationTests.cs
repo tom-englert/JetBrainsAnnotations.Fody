@@ -50,9 +50,9 @@
         [Fact]
         public void IsDocumentationProperlyDecorated()
         {
-            var _documentation = XDocument.Load(Path.ChangeExtension(_targetAssemblyPath, ".xml")).ToString();
+            var documentation = XDocument.Load(Path.ChangeExtension(_targetAssemblyPath, ".xml")).ToString();
 
-            Assert.Equal(Resources.ExpectedDocumentation, _documentation);
+            Assert.Equal(XDocument.Parse(Resources.ExpectedDocumentation).ToString(), documentation);
         }
     }
 }

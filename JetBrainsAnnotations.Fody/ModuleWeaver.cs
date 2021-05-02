@@ -109,7 +109,7 @@
         private class Executor
         {
             [NotNull, ItemNotNull]
-            private readonly ICollection<string> _allAttributes;
+            private readonly ICollection<TypeDefinition> _allAttributes;
             [NotNull, ItemNotNull]
             private readonly IList<XElement> _root;
             [NotNull]
@@ -119,7 +119,7 @@
             {
                 _moduleDefinition = moduleDefinition;
                 _root = new List<XElement>();
-                _allAttributes = new HashSet<string>(GetAllAttributes(jetbrainsAnnotations));
+                _allAttributes = new HashSet<TypeDefinition>(GetAllAttributes(jetbrainsAnnotations));
             }
 
             [NotNull, ItemNotNull]
@@ -267,7 +267,7 @@
                 var customAttributes = attributeProvider.CustomAttributes;
                 Debug.Assert(customAttributes != null, "customAttributes != null");
                 var attributes = customAttributes
-                    .Where(attr => _allAttributes.Contains(attr?.AttributeType?.Name))
+                    .Where(attr => _allAttributes.Contains(attr?.AttributeType.Resolve()))
                     .ToArray();
 
                 foreach (var attribute in attributes)
@@ -278,13 +278,12 @@
                 return attributes;
             }
 
-            [NotNull, ItemNotNull]
-            private static IEnumerable<string> GetAllAttributes([NotNull] AssemblyDefinition assemblyDefinition)
+            [ItemNotNull]
+            private static IEnumerable<TypeDefinition>? GetAllAttributes([NotNull] AssemblyDefinition assemblyDefinition)
             {
                 // ReSharper disable once AssignNullToNotNullAttribute
                 return assemblyDefinition.MainModule?.Types?
-                    .Select(type => type?.Name)
-                    .Where(attributeName => attributeName?.EndsWith("Attribute") == true);
+                    .Where(type => type.Name?.EndsWith("Attribute") == true);
             }
         }
     }
